@@ -1,0 +1,150 @@
+
+<!DOCTYPE html> 
+
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <title>SnakeGame</title>
+
+    <style>
+        body {
+            background-color: #f0ce90; /*Dark aracde background */
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            color:#daebd5; /* Retro glowing green */
+            text-shadow: 0 0 10px rgba(38, 239, 246, 0.5);
+            margin-bottom: 5px;
+        }
+        P {
+            color: #888;
+            margin-bottom: 20px;
+        }
+         /* Style the actual snake canvas board game window */
+         canvas {
+            background-color: #d1d1d4;
+            border: 6px double;
+            box-shadow: 0 0 30px rgba(74, 246, 38, 0.2);
+
+         }
+    </style>
+</head>
+<body>
+    <h1>Graphing A Line</h1>
+    <p>Press the start button, type in your coordinates, and watch your line be plotted!<button id="startButton">Start Art Experience</button></p>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+
+
+   
+<script>
+
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d"); //The ctx (context) variable acts as the digital paintbrush and tool engine used to configure styles and draw shapes onto the canvas.
+
+const startButton = document.getElementById("startButton");
+
+// Listen for a click event to trigger the experience
+startButton.addEventListener("click", function() {
+    
+    // Launch the artwork application
+    main();
+}); 
+
+    function main() {
+        let x1 = parseInt(prompt("Enter the x coordinate of your first point, any number from 0 to 500: ", "0"));
+
+        while (isNaN(x1) || x1 < 0 || x1 > 5) {
+            alert("Please enter a valid number between 0 and 500 for the x coordinate of your first point.");
+            x1 = parseInt(prompt("Enter the x coordinate of your first point, any number from 0 to 500: ", "0"));
+        }
+
+        let y1 = parseInt(prompt("Enter the y coordinate of your first point, any number from 0 to 500: ", "0"));
+
+        while (isNaN(y1) || y1 < 0 || y1 > 5) {
+            alert("Please enter a valid number between 0 and 500 for the y coordinate of your first point.");
+            y1 = parseInt(prompt("Enter the y coordinate of your first point, any number from 0 to 500: ", "0"));
+        }
+
+        let x2 = parseInt(prompt("Enter the x coordinate of your second point, any number from 0 to 500: ", "0"));
+
+       while (isNaN(x2) || x2 < 0 || x2 > 5) {
+            alert("Please enter a valid number between 0 and 500 for the x coordinate of your second point.");
+            x2 = parseInt(prompt("Enter the x coordinate of your second point, any number from 0 to 500: ", "0"));
+        }
+
+        let y2 = parseInt(prompt("Enter the y coordinate of your second point, any number from 0 to 500: ", "0"));
+
+        while (isNaN(y2) || y2 < 0 || y2 > 5) {
+            alert("Please enter a valid number between 0 and 500 for the y coordinate of your second point.");
+            y2 = parseInt(prompt("Enter the y coordinate of your second point, any number from 0 to 500: ", "0"));
+        }
+
+        let realX1 = x1 * 100;
+        let realY1 = y1 * 100;
+        let realX2 = x2 * 100;
+        let realY2 = y2 * 100;
+
+    // Clear the entire canvas starting from top-left (0, 0) to its full width and height
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawGrid(); // Call the drawGrid function to create a grid on the canvas
+
+    // Call the drawLine function with the collected coordinates
+        drawLine(realX1, realY1, realX2, realY2);
+  
+    }
+
+    function drawGrid(step = 100){
+
+        ctx.strokeStyle = "#e0e0e0"; 
+        ctx.lineWidth = 1; 
+        
+        ctx.font = '10px Courier New, monospace';
+        ctx.fillStyle = '#666666';
+
+
+        for (let i = 100; i <= 500; i += 100) {
+        //vertical lines
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, 500);
+            ctx.stroke();
+
+            // 2. Adjust X text position for the final '5' so it doesn't get cut off
+            let xPos = (i === 500) ? i - 10 : i + 2;
+            ctx.fillText(i / 100, xPos, 12);
+
+        //horizontal lines
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(500, i);
+            ctx.stroke();
+
+            ctx.fillText(i / 100, 2, i - 1);
+            ctx.fillText(i / 100, i + 2, 12);
+        }
+
+        ctx.fillText('0,0', 2, 12);
+    }
+
+function drawLine(realX1, realY1, realX2, realY2) {
+    ctx.beginPath();
+    ctx.moveTo(realX1, realY1);
+    ctx.lineTo(realX2, realY2);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+</script>
+</body>
+</html>
+
